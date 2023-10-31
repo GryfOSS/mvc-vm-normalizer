@@ -1,0 +1,22 @@
+{
+    "name": "praetoriantechnology/mvc-vm-normalizer",
+    "type": "library",
+    "license": "Propertiary",
+    "autoload": {
+        "psr-4": {
+            "Praetorian\\Mvc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "IDCT Bartosz Pachołek",
+            "email": "bartosz+github@idct.tech"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "symfony/serializer": "^6.3",
+        "symfony/event-dispatcher": "^6.3",
+        "symfony/http-kernel": "^6.3"
+    }
+}
