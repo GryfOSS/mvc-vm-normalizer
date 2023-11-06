@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Praetorian\SystemBehavior\Normalizer;
+namespace Praetorian\Mvc\Normalizer;
 
 use Praetorian\BettingBundle\Model\ViewModel\MarketViewModel;
 use Praetorian\Mvc\Attribute\DefaultViewModel;
@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-class MarketNormalizer implements NormalizerInterface
+class DefaultViewModelNormalizer implements NormalizerInterface
 {
     /**
      * @param  ObjectNormalizer  $normalizer
