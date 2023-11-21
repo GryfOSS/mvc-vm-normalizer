@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Praetorian\Mvc\Normalizer;
 
+use Doctrine\Common\Proxy\Proxy;
+use Doctrine\Common\Util\ClassUtils;
 use Praetorian\BettingBundle\Model\ViewModel\MarketViewModel;
 use Praetorian\Mvc\Attribute\DefaultViewModel;
 use Praetorian\Mvc\Model\NormalizableInterface;
@@ -30,7 +32,8 @@ class DefaultViewModelNormalizer implements NormalizerInterface
      */
     public function normalize($object, string $format = null, array $context = []): mixed
     {
-        $reflector = new \ReflectionClass($object::class);
+        $class = $object instanceof Proxy ? ClassUtils::getClass($object) : $object::class;
+        $reflector = new \ReflectionClass($class);
         $attributes = $reflector->getAttributes(DefaultViewModel::class);
 
         /** @var DefaultViewModel */
@@ -47,7 +50,8 @@ class DefaultViewModelNormalizer implements NormalizerInterface
         }
 
         //it is a candidate, now we need to check if it has DefaultViewModel
-        $reflector = new \ReflectionClass($data::class);
+        $class = $data instanceof Proxy ? ClassUtils::getClass($data) : $data::class;
+        $reflector = new \ReflectionClass($class);
         $attributes = $reflector->getAttributes(DefaultViewModel::class);
         if (empty($attributes)) {
             return false;
