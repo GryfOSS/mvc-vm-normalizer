@@ -15,8 +15,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "symfony/serializer": "^6.3",
-        "symfony/event-dispatcher": "^6.3",
-        "symfony/http-kernel": "^6.3"
+        "symfony/serializer": "^6 || ^7",
+        "symfony/event-dispatcher": "^6 || ^7",
+        "symfony/http-kernel": "^6 || ^7"
     }
 }
