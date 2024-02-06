@@ -10,18 +10,17 @@ use Praetorian\BettingBundle\Model\ViewModel\MarketViewModel;
 use Praetorian\Mvc\Attribute\DefaultViewModel;
 use Praetorian\Mvc\Model\NormalizableInterface;
 use Praetorian\Sportsbook\Orm\Entity\Market;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
-class DefaultViewModelNormalizer implements NormalizerInterface
+class DefaultViewModelNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
-    /**
-     * @param  ObjectNormalizer  $normalizer
-     */
-    public function __construct(protected readonly ObjectNormalizer $normalizer)
-    {
-    }
+    use NormalizerAwareTrait;
 
     /**
      * @param $object
@@ -30,7 +29,7 @@ class DefaultViewModelNormalizer implements NormalizerInterface
      * @return array|\ArrayObject|bool|float|int|mixed|string|null
      * @throws ExceptionInterface
      */
-    public function normalize($object, string $format = null, array $context = []): mixed
+    public function normalize($object, string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
         $class = $object instanceof Proxy ? ClassUtils::getClass($object) : $object::class;
         $reflector = new \ReflectionClass($class);
@@ -39,7 +38,6 @@ class DefaultViewModelNormalizer implements NormalizerInterface
         /** @var DefaultViewModel */
         $instance = $attributes[0]->newInstance();
         $viewModelClass = $instance->getViewModelClass();
-
         return $this->normalizer->normalize(new $viewModelClass($object), $format, $context);
     }
 
@@ -58,5 +56,12 @@ class DefaultViewModelNormalizer implements NormalizerInterface
         }
 
         return true;
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            NormalizableInterface::class => true
+        ];
     }
 }
