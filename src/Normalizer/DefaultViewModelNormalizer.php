@@ -23,13 +23,9 @@ class DefaultViewModelNormalizer implements NormalizerInterface, NormalizerAware
     use NormalizerAwareTrait;
 
     /**
-     * @param $object
-     * @param  string|null  $format
-     * @param  array  $context
-     * @return array|\ArrayObject|bool|float|int|mixed|string|null
      * @throws ExceptionInterface
      */
-    public function normalize($object, string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
         $class = $object instanceof Proxy ? ClassUtils::getClass($object) : $object::class;
         $reflector = new \ReflectionClass($class);
@@ -41,7 +37,7 @@ class DefaultViewModelNormalizer implements NormalizerInterface, NormalizerAware
         return $this->normalizer->normalize(new $viewModelClass($object), $format, $context);
     }
 
-    public function supportsNormalization($data, string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         if (!$data instanceof NormalizableInterface) {
             return false;
