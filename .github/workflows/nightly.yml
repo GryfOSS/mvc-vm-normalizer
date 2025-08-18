@@ -1,0 +1,112 @@
+name: Nightly Tests
+
+on:
+  schedule:
+    # Run at 2 AM UTC every day
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  nightly-matrix:
+    name: Nightly Matrix Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.2', '8.3']
+        dependencies: ['lowest', 'locked', 'highest']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+          coverage: xdebug
+          tools: composer:v2
+
+      - name: Install dependencies (${{ matrix.dependencies }})
+        run: |
+          if [ "${{ matrix.dependencies }}" = "lowest" ]; then
+            composer update --prefer-lowest --prefer-dist --no-progress --no-suggest
+          elif [ "${{ matrix.dependencies }}" = "highest" ]; then
+            composer update --prefer-dist --no-progress --no-suggest
+          else
+            composer install --prefer-dist --no-progress --no-suggest
+          fi
+
+      - name: Run PHPUnit Tests
+        run: XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-text
+
+      - name: Run Behat Tests
+        run: ./vendor/bin/behat --format=progress
+
+      - name: Check Coverage
+        run: php bin/check-coverage.php
+
+  dependency-security:
+    name: Security & Dependency Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Security audit
+        run: composer audit
+
+      - name: Check for outdated dependencies
+        run: composer outdated --direct
+
+  notify-on-failure:
+    name: Notify on Failure
+    runs-on: ubuntu-latest
+    needs: [nightly-matrix, dependency-security]
+    if: failure()
+
+    steps:
+      - name: Create Issue on Failure
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Nightly Tests Failed - ' + new Date().toISOString().split('T')[0],
+              body: `
+              ## Nightly Test Failure Report
+
+              The nightly tests have failed. Please investigate the following:
+
+              **Failed Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+              **Timestamp:** ${new Date().toISOString()}
+
+              **Possible Causes:**
+              - Dependency version conflicts
+              - Security vulnerabilities in dependencies
+              - Breaking changes in dependencies
+              - Infrastructure issues
+
+              **Action Required:**
+              Please review the failed workflow and address any issues found.
+
+              This issue was automatically created by the nightly test workflow.
+              `,
+              labels: ['bug', 'nightly-failure', 'automated']
+            });
+
+            console.log('Created issue:', issue.data.number);

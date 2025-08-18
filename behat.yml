@@ -1,0 +1,7 @@
+default:
+    suites:
+        normalization:
+            paths:
+                - '%paths.base%/features'
+            contexts:
+                - GryfOSS\Mvc\Tests\Behat\NormalizationContext
