@@ -12,6 +12,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 
 /**
  * @covers \GryfOSS\Mvc\Normalizer\DefaultViewModelNormalizer
