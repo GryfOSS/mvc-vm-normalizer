@@ -71,15 +71,6 @@ jobs:
         if: matrix.coverage
         run: php bin/check-coverage.php
 
-      - name: Upload Coverage Reports to Codecov
-        if: matrix.coverage
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage/clover.xml
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: true
-
       - name: Archive Coverage Report
         if: matrix.coverage
         uses: actions/upload-artifact@v4

@@ -13,7 +13,7 @@ This project uses GitHub Actions for comprehensive continuous integration and de
   - PHPUnit tests with 100% coverage verification
   - Behat acceptance tests
   - Composer validation and security audit
-  - Coverage reports uploaded to Codecov
+  - Local coverage report generation
 - **Code Quality**: Linting and static analysis
 - **Matrix Check**: Ensures all matrix jobs pass
 
@@ -129,7 +129,7 @@ All pipelines enforce these quality gates:
 ## 📈 Monitoring
 
 ### Coverage Tracking
-- Codecov integration for trend analysis
+- Local coverage verification ensuring 100% coverage
 - HTML reports archived for 30 days
 - Coverage badge auto-updated
 
