@@ -1,7 +1,7 @@
 MVC View Model Normalizer
 =========================
 
-![Tests](https://github.com/gryfoss/mvc-vm-normalizer/workflows/tests/badge.svg)
+![Tests](https://github.com/gryfoss/mvc-vm-normalizer/actions/workflows/tests.yml/badge.svg)
 ![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 ![PHP](https://img.shields.io/badge/php-8.2%20%7C%208.3-blue)
 ![Tests](https://img.shields.io/badge/tests-PHPUnit%20%2B%20Behat-blue)
@@ -103,7 +103,6 @@ php bin/check-coverage.php
 
 ## 📚 Documentation
 
-- **[CI/CD Pipeline](CI-CD.md)**: Complete GitHub Actions setup
 - **[Behat Tests](features/README.md)**: Acceptance test documentation
 - **[Coverage Reports](coverage/html/)**: Detailed coverage analysis
 
