@@ -103,7 +103,6 @@ php bin/check-coverage.php
 
 ## 📚 Documentation
 
-- **[CI/CD Pipeline](CI-CD.md)**: Complete GitHub Actions setup
 - **[Behat Tests](features/README.md)**: Acceptance test documentation
 - **[Coverage Reports](coverage/html/)**: Detailed coverage analysis
 
