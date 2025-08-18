@@ -1,7 +1,7 @@
 MVC View Model Normalizer
 =========================
 
-![CI Pipeline](https://github.com/praetoriantechnology/mvc-vm-normalizer/workflows/CI%20Pipeline/badge.svg)
+![Tests](https://github.com/praetoriantechnology/mvc-vm-normalizer/workflows/tests/badge.svg)
 ![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 ![PHP](https://img.shields.io/badge/php-8.2%20%7C%208.3-blue)
 ![Tests](https://img.shields.io/badge/tests-PHPUnit%20%2B%20Behat-blue)
