@@ -8,7 +8,7 @@ Usage:
 1. Be sure to add `ViewSubscriber` to your `services.yaml` file:
 
 ```yaml
-Praetorian\Mvc\Subscriber\ViewSubscriber:
+GryfOSS\Mvc\Subscriber\ViewSubscriber:
    autowire: true
    autoconfigure: true
 ```
