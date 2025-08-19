@@ -2,7 +2,7 @@
     "name": "gryfoss/mvc-vm-normalizer",
     "description": "Symfony MVC View Model Normalizer - provides DefaultViewModel attribute and normalizer for intermediate layer between data models and view serialization",
     "type": "library",
-    "license": "proprietary",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "GryfOSS\\Mvc\\": "src/"
