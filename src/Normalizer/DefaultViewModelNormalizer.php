@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace GryfOSS\Mvc\Normalizer;
 
-use Doctrine\Common\Proxy\Proxy;
 use Doctrine\Common\Util\ClassUtils;
+use Doctrine\Persistence\Proxy;
 use GryfOSS\Mvc\Attribute\DefaultViewModel;
 use GryfOSS\Mvc\Model\NormalizableInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
